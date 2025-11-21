@@ -4,10 +4,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>1. Introduction of Computer </title>
 
   <style>
-  
     body {
       background-color: #f8f9fa;
     }
@@ -107,7 +105,7 @@
       height: 100%;
       max-height: none;
       overflow: visible;
-     
+
     }
 
     .question-text {
@@ -389,6 +387,136 @@
     .option-label.wrong {
       animation: pulseBad 900ms ease-out;
     }
+
+
+    body.darkmode {
+      background: #000 !important;
+      color: #f8f9fa !important;
+    }
+
+    body.darkmode .question-box,
+    body.darkmode .card,
+    body.darkmode .card-app {
+      background: #181818 !important;
+      border-color: #282828 !important;
+      color: #f8f9fa !important;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3) !important;
+    }
+
+    body.darkmode .option-label {
+      background: #232323 !important;
+      color: #f8f9fa !important;
+      border-color: #323232 !important;
+    }
+
+    body.darkmode .option-label.selected {
+      background: #222233 !important;
+    }
+
+    body.darkmode .btn,
+    body.darkmode .btn:focus {
+      background: #222 !important;
+      color: #f8f9fa !important;
+      border-color: #444 !important;
+    }
+
+    body.darkmode #helpModal .modal-content {
+      background-color: #181818 !important;
+      color: #f8f9fa !important;
+      border-color: #282828 !important;
+    }
+
+    body.darkmode #helpModal .modal-body {
+      background-color: #181818 !important;
+      color: #f8f9fa !important;
+    }
+
+    body.darkmode #helpModal .btn-primary {
+      background-color: #333366 !important;
+      border-color: #333366 !important;
+      color: #f8f9fa !important;
+    }
+
+    body.darkmode #helpModal .btn-primary:hover {
+      background-color: #444488 !important;
+      border-color: #444488 !important;
+    }
+
+    body.darkmode #scoreModal .modal-content,
+    body.darkmode #explanationModal .modal-content {
+      background-color: #181818 !important;
+      color: #f8f9fa !important;
+      border-color: #282828 !important;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.6) !important;
+    }
+
+    body.darkmode #scoreModal .modal-body,
+    body.darkmode #explanationModal .modal-body {
+      background-color: #181818 !important;
+      color: #f8f9fa !important;
+    }
+
+    body.darkmode #scoreModal .btn-secondary,
+    body.darkmode #explanationModal .btn-close {
+      background-color: #222 !important;
+      color: #f8f9fa !important;
+      border: none !important;
+    }
+
+    body.darkmode #scoreModal .btn-secondary:hover,
+    body.darkmode #explanationModal .btn-close:hover {
+      background-color: #444 !important;
+      color: #fff !important;
+    }
+
+    /* Dark Mode Feedback Colors (High Specificity) */
+    body.darkmode #options .option-label.correct {
+      background-color: #1c4a24 !important;
+      /* Dark Green */
+      border-color: #28a745 !important;
+      /* Bright Green Border */
+      color: #fff !important;
+    }
+
+    body.darkmode #options .option-label.wrong {
+      background-color: #5a2d2d !important;
+      /* Dark Red */
+      border-color: #dc3545 !important;
+      /* Bright Red Border */
+      color: #fff !important;
+    }
+
+
+    /* Color-codes for the post-submit review box in Dark Mode */
+    body.darkmode #scoreContent .card.bg-success {
+      background-color: #1c4a24 !important;
+      /* Dark Green for correct */
+      border-color: #28a745 !important;
+    }
+
+    body.darkmode #scoreContent .card.bg-danger {
+      background-color: #5a2d2d !important;
+      /* Dark Red for wrong */
+      border-color: #dc3545 !important;
+    }
+
+    body.darkmode #scoreContent .card.bg-secondary {
+      background-color: #343a40 !important;
+      /* Dark Grey for unanswered */
+      border-color: #6c757d !important;
+    }
+
+    /* Ensure text inside these cards is white */
+    body.darkmode #scoreContent .card .text-white {
+      color: #fff !important;
+    }
+
+
+    .qbtn.skipped {
+      background-color: #ada7a0b9;
+      /* Brown */
+      color: white;
+    }
   </style>
 </head>
 
@@ -403,10 +531,19 @@
 
 
   <div class="container py-4">
-    <div>
-      <center> <b style="font-size: larger; color: #f8f9fb; text-decoration: underline;">1. Introduction of Computer</b></center>
-    </div>
+    <!-- <div>
+      <center> <b style="font-size: larger; color: #f8f9fb; text-decoration: underline;"> Haryanaka Dynasty : 544 BC-412 BC		 </b>
+      </center>
+    </div> -->
     <div class="topbar mb-3">
+      <div style="display:flex; align-items:center; gap:15px; color:#fff; font-weight:600;">
+        <span id="modeLabel">Light Mode</span>
+        <button id="modeSwitcher" class="btn btn-dark">🌙 Dark Mode</button>
+
+        <span id="hintLabel">Hint: ON</span>
+        <button id="hintToggle" class="btn btn-secondary">Exam Mode</button>
+      </div>
+
 
       <div class="text-end">
 
@@ -437,8 +574,13 @@
 
             </div>
 
+
+
+
             <div class="mt-2">
               <button id="helpBtn" class="btn btn-info">Help!</button>
+              <button id="reviewSummaryBtn" class="btn btn-success" style="display: none;">📊 Show Summary</button>
+
             </div>
 
           </div>
@@ -448,16 +590,16 @@
         </div>
 
 
-        
+
 
 
         <div class="col-lg-4">
 
           <div class="d-grid mb-2">
-          <button id="toggleNavBtn" class="btn btn-outline-primary">
-            👁️ Toggle Question Navigator
-          </button>
-        </div>
+            <button id="toggleNavBtn" class="btn btn-outline-primary">
+              👁️ Toggle Question Navigator
+            </button>
+          </div>
           <div class="card p-3 mb-3">
 
             <h6>Question Navigator</h6>
@@ -483,7 +625,7 @@
             </div>
           </div>
 
-          
+
         </div>
       </div>
     </div>
@@ -538,7 +680,8 @@
 
   <script>
 
-    // ---------- feedback sounds ----------
+
+    // ---------- feedback sounds ----------
     const correctSound = new Audio("a.mp3");
     const wrongSound = new Audio("b.mp3");
 
@@ -644,86 +787,88 @@
     }
 
     function renderQuestion(num) {
-      const q = questions[num];
-      if (!q) return;
-      if (!q._shuffled) shuffleOptionsForQuestion(q);
-      const s = q._shuffled;
+  const q = questions[num];
+  if (!q) return;
+  if (!q._shuffled) shuffleOptionsForQuestion(q);
+  const s = q._shuffled;
 
-      // image or text
-      const qImg = document.getElementById('question-image');
-      qImg.innerHTML = '';
-      if (q.image) {
-        qImg.innerHTML = `<img src="${escapeHtml(q.image)}" class="img-fluid rounded" style="max-height:240px;">`;
-      }
+  const qImg = document.getElementById('question-image');
+  qImg.innerHTML = '';
+  if (q.image) {
+    qImg.innerHTML = `<img src="${escapeHtml(q.image)}" class="img-fluid rounded" style="max-height:240px;">`;
+  }
 
-      document.getElementById('questionText').innerHTML = `<div><strong>Q${num}.</strong> ${escapeHtml(q.text)}</div>`;
+  document.getElementById('questionText').innerHTML = `<div><strong>Q${num}.</strong> ${escapeHtml(q.text)}</div>`;
 
-      // options
-      const optionsWrap = document.getElementById('options');
-      optionsWrap.innerHTML = s.meta.map((m, idx) => {
-        const pos = idx + 1;
-        const selected = (answers[num] && answers[num].selectedMetaId === m.id) ? 'selected' : '';
-        return `
+  const optionsWrap = document.getElementById('options');
+  optionsWrap.innerHTML = s.meta.map((m, idx) => {
+    const pos = idx + 1;
+    const selected = (answers[num] && answers[num].selectedMetaId === m.id) ? 'selected' : '';
+    return `
       <label class="option-label ${selected}" data-pos="${pos}" data-original-id="${m.id}">
         <div class="badge-pos bg-light text-muted">${pos}</div>
         <div>${escapeHtml(m.text)}</div>
       </label>
     `;
-      }).join('');
+  }).join('');
 
-      // attach click handlers
-      document.querySelectorAll('#options .option-label').forEach(lbl => {
-        lbl.addEventListener('click', () => {
-          // prevent feedback if this question already answered by feedback
-          if (answers[currentQuestion] && answers[currentQuestion].answeredFeedback) return;
+  // After submission, show correct/wrong answers and disable clicks
+  if (testSubmitted) {
+    const origCorrectId = parseInt(q.correct, 10) - 1;
+    const curAns = answers[num];
 
-          const origId = parseInt(lbl.dataset.originalId, 10); // original option index (0-based)
-          const pos = parseInt(lbl.dataset.pos, 10);
+    document.querySelectorAll('#options .option-label').forEach((lbl) => {
+      const origId = parseInt(lbl.dataset.originalId, 10);
 
-          // preserve review flag if present
-          const prev = answers[currentQuestion] || { selectedMetaId: null, review: false };
+      // Always show the correct answer
+      if (origId === origCorrectId) {
+        lbl.classList.add('correct');
+        lbl.querySelector('.badge-pos').innerHTML = '✔';
+      }
 
-          // store selection and mark that feedback shown for this question
-          answers[currentQuestion] = { selectedMetaId: origId, review: !!prev.review, answeredFeedback: true };
+      // If the user answered and it was wrong, mark their answer as wrong
+      if (curAns && (curAns.selectedMetaId !== null && curAns.selectedMetaId !== undefined)) {
+        if (curAns.selectedMetaId === origId && curAns.selectedMetaId !== origCorrectId) {
+          lbl.classList.add('wrong');
+          lbl.querySelector('.badge-pos').innerHTML = '✖';
+        }
+      }
+    });
+  }
 
-          // mark selected visually immediately
-          document.querySelectorAll('#options .option-label').forEach(l => {
-            l.classList.remove('selected'); // clear previous selection visual
-            // keep .correct/.wrong if present from earlier - we clear only selected class
-          });
-          lbl.classList.add('selected');
+  // Attach click handlers (with a guard to prevent action after submission)
+  document.querySelectorAll('#options .option-label').forEach(lbl => {
+    lbl.addEventListener('click', () => {
+      if (testSubmitted) return; // PREVENT CLICKS AFTER SUBMIT
 
-          // compute correct original index for this question
-          const q = questions[currentQuestion];
-          const origCorrectId = parseInt(q.correct, 10) - 1;
+      if (answers[currentQuestion] && answers[currentQuestion].answeredFeedback) return;
 
-          // find the corresponding label element for the correct option
-          const correctLbl = Array.from(document.querySelectorAll('#options .option-label'))
-            .find(l => parseInt(l.dataset.originalId, 10) === origCorrectId);
+      const origId = parseInt(lbl.dataset.originalId, 10);
+      const pos = parseInt(lbl.dataset.pos, 10);
+      const prev = answers[currentQuestion] || { selectedMetaId: null, review: false };
 
-          const isCorrect = (origId === origCorrectId);
+      answers[currentQuestion] = { selectedMetaId: origId, review: !!prev.review, answeredFeedback: true };
 
-          // show instant feedback (visual + screen blink)
-          showInstantFeedback(isCorrect, lbl, correctLbl);
+      document.querySelectorAll('#options .option-label').forEach(l => l.classList.remove('selected'));
+      lbl.classList.add('selected');
 
-          // update nav badge now that answer exists
-          updateNav(currentQuestion);
+      const q = questions[currentQuestion];
+      const origCorrectId = parseInt(q.correct, 10) - 1;
+      const correctLbl = Array.from(document.querySelectorAll('#options .option-label'))
+        .find(l => parseInt(l.dataset.originalId, 10) === origCorrectId);
 
-          // OPTIONAL: if you want to auto-move to next question after short delay, uncomment below:
-          /*
-          setTimeout(()=>{
-            if (currentQuestion < totalQuestions) loadQuestion(currentQuestion + 1);
-          }, 1200);
-          */
-        });
-      });
+      const isCorrect = (origId === origCorrectId);
+      showInstantFeedback(isCorrect, lbl, correctLbl);
+      updateNav(currentQuestion);
+    });
+  });
 
+  // Mark current in nav
+  document.querySelectorAll('.qbtn').forEach(b => b.classList.remove('current'));
+  const curBtn = document.getElementById('q' + num);
+  if (curBtn) curBtn.classList.add('current');
+}
 
-      // mark current in nav
-      document.querySelectorAll('.qbtn').forEach(b => b.classList.remove('current'));
-      const curBtn = document.getElementById('q' + num);
-      if (curBtn) curBtn.classList.add('current');
-    }
 
     function loadQuestion(num) {
       currentQuestion = num;
@@ -735,6 +880,15 @@
 
 
     function mark(forReview) {
+      // After submission, this button's function is only to navigate.
+      if (testSubmitted) {
+        if (currentQuestion < totalQuestions) {
+          loadQuestion(currentQuestion + 1);
+        }
+        return; // Important: do not save or modify answers
+      }
+
+      // Original logic for before submission
       const curAns = answers[currentQuestion];
       if (!curAns) {
         // store as not attempted but review flag
@@ -796,6 +950,9 @@
     }
 
     function submitTest(isAuto = false) {
+      testSubmitted = true;
+      renderQuestion(currentQuestion);
+
       // compute scores (default: +2 for correct, -0.5 for wrong)
       let attempted = 0, correct = 0, wrong = 0;
       for (let i = 1; i <= totalQuestions; i++) {
@@ -836,7 +993,7 @@
         scHtml += `<div class="card mb-2 ${bg}"><div class="card-body">
       <p><strong>Q${i}.</strong> ${escapeHtml(q.text)}</p>
       <p><strong>Your Answer:</strong> ${escapeHtml(userAnsText)}</p>
-      <p><strong>Correct Answer:</strong> ${escapeHtml(correctAnsText)}</p>
+      <p><strong>Correct Answer ✅:</strong> ${escapeHtml(correctAnsText)}</p>
     ${explanations[i] ? `<button class="btn btn-sm btn-light mt-2" onclick="showExplanation(${i})">View Explanation</button>` : ''}
 <div class="mt-2">
   <a href="https://www.google.com/search?q=${encodeURIComponent(questions[i].text)}" 
@@ -853,8 +1010,8 @@
       new bootstrap.Modal(document.getElementById('scoreModal')).show();
 
       // hide main UI optionally
-      document.getElementById('question-box').style.display = 'none';
-      document.getElementById('question-nav').style.display = 'none';
+      //   document.getElementById('question-box').style.display = 'none';
+      // document.getElementById('question-nav').style.display = 'none';
       document.getElementById('submitBtn').style.display = 'none';
     }
 
@@ -916,7 +1073,7 @@
       document.getElementById('reviewNextBtn').addEventListener('click', () => { mark(true); });
       document.getElementById('prevBtn').addEventListener('click', () => { if (currentQuestion > 1) loadQuestion(currentQuestion - 1); });
       document.getElementById('clearBtn').addEventListener('click', clearResponse);
-      document.getElementById('jumpBtn').addEventListener('click', jumpTo);
+     document.getElementById('jumpBtn').addEventListener('click', jumpTo);
 
       document.getElementById('submitBtn').addEventListener('click', () => { if (confirm('Submit test?')) submitTest(false); });
     });
@@ -1022,44 +1179,200 @@
     /* ---------- helper: instant feedback (paste into your <script>) ---------- */
 
     function showInstantFeedback(isCorrect, selectedLbl, correctLbl) {
-      // disable clicking while feedback is showing
+      // suppress feedback if hint is disabled
+      if (!hintEnabled) {
+        // only visually select the clicked option, no colors or icons
+        document.getElementById('options').classList.remove('disabled');
+        return;
+      }
+
+      // normal feedback code follows
       const optionsWrap = document.getElementById('options');
       optionsWrap.classList.add('disabled');
 
       playFeedbackSound(isCorrect);
 
-
-      // add classes for visuals
       if (isCorrect) {
         selectedLbl.classList.add('correct');
-        // decorate badge with tick
         selectedLbl.querySelector('.badge-pos').innerHTML = '✔';
         document.body.classList.add('blink-green');
       } else {
         selectedLbl.classList.add('wrong');
         selectedLbl.querySelector('.badge-pos').innerHTML = '✖';
         document.body.classList.add('blink-red');
-
-        // highlight correct option
         if (correctLbl) {
           correctLbl.classList.add('correct');
           correctLbl.querySelector('.badge-pos').innerHTML = '✔';
         }
       }
 
-      // small glow + revert after delay
       setTimeout(() => {
-        // remove overlay classes
         document.body.classList.remove('blink-green', 'blink-red');
-
-        // remove disabled but keep final styling (so user can still see)
         optionsWrap.classList.remove('disabled');
+      }, 900);
+    }
 
-        // NOTE: we keep .correct/.wrong classes so UI shows result until next question loads.
-        // If you prefer to auto-clear them after a while, uncomment below:
-        // selectedLbl.classList.remove('correct','wrong');
-        // if (correctLbl) correctLbl.classList.remove('correct');
-      }, 900); // match animation duration
+    let isDarkMode = false;
+    let hintEnabled = true;
+    let testSubmitted = false;
+
+    document.getElementById('modeSwitcher').addEventListener('click', () => {
+      isDarkMode = !isDarkMode;
+      document.body.classList.toggle('darkmode', isDarkMode);
+      const modeLabel = document.getElementById('modeLabel');
+      const btn = document.getElementById('modeSwitcher');
+      if (isDarkMode) {
+        modeLabel.textContent = 'Dark Mode';
+        btn.innerHTML = '☀️ Light Mode';
+      } else {
+        modeLabel.textContent = 'Light Mode';
+        btn.innerHTML = '🌙 Dark Mode';
+      }
+    });
+
+    document.getElementById('hintToggle').addEventListener('click', () => {
+      hintEnabled = !hintEnabled;
+      const hintLabel = document.getElementById('hintLabel');
+      const btn = document.getElementById('hintToggle');
+      if (hintEnabled) {
+        hintLabel.textContent = 'Hint: ON';
+        btn.innerText = 'Exam Mode';
+        document.getElementById('helpBtn').style.display = '';
+      } else {
+        hintLabel.textContent = 'Hint: OFF';
+        btn.innerText = 'Practice Mode';
+        document.getElementById('helpBtn').style.display = 'none';
+      }
+    });
+
+
+    document.getElementById('reviewSummaryBtn').addEventListener('click', () => {
+      new bootstrap.Modal(document.getElementById('scoreModal')).show();
+    });
+
+
+    function updateNav(num) {
+      const btn = document.getElementById('q' + num);
+      if (!btn) return;
+
+      // Clear all previous status classes
+      btn.className = 'qbtn';
+
+      if (testSubmitted) {
+        const q = questions[num];
+        const ans = answers[num];
+        const origCorrectId = parseInt(q.correct, 10) - 1;
+
+        if (ans && (ans.selectedMetaId !== null && ans.selectedMetaId !== undefined)) {
+          // Question was answered
+          if (ans.selectedMetaId === origCorrectId) {
+            btn.classList.add('answered'); // Will be green
+          } else {
+            btn.classList.add('not-answered'); // Will be red
+          }
+        } else {
+          // Question was not attempted
+          btn.classList.add('skipped'); // Will be brown
+        }
+      } else {
+        // Original logic for before submission
+        const ans = answers[num];
+        if (ans && ans.review) {
+          if (ans.selectedMetaId !== null && ans.selectedMetaId !== undefined) {
+            btn.classList.add('review-answered');
+          } else {
+            btn.classList.add('review');
+          }
+        } else if (ans && (ans.selectedMetaId === 0 || ans.selectedMetaId)) {
+          btn.classList.add('answered');
+        } else {
+          btn.classList.add('not-answered');
+        }
+      }
+
+      // Always highlight the current question
+      if (num === currentQuestion) {
+        btn.classList.add('current');
+      }
+    }
+
+
+    function submitTest(isAuto = false) {
+      testSubmitted = true;
+
+      // Adjust button visibility and text for review mode
+      const saveNextButton = document.getElementById('saveNextBtn');
+      saveNextButton.textContent = 'Next ⟶'; // Change text to "Next"
+
+      document.getElementById('reviewNextBtn').style.display = 'none';
+      document.getElementById('clearBtn').style.display = 'none';
+      document.getElementById('submitBtn').style.display = 'none';
+      document.getElementById('reviewSummaryBtn').style.display = 'inline-block';
+
+
+      // compute scores (default: +2 for correct, -0.5 for wrong)
+      let attempted = 0, correct = 0, wrong = 0;
+      for (let i = 1; i <= totalQuestions; i++) {
+        const a = answers[i];
+        if (a && (a.selectedMetaId === 0 || a.selectedMetaId)) {
+          attempted++;
+          const origCorrectId = parseInt(questions[i].correct, 10) - 1;
+          if (a.selectedMetaId === origCorrectId) correct++;
+          else wrong++;
+        }
+      }
+      const skipped = totalQuestions - attempted;
+      const score = (correct * 2) - (wrong * 0.5);
+
+      // Build score content
+      let scHtml = `<div class="row"><div class="col-md-6">
+  <h4>Result</h4>
+  <p>Attempted: <strong>${attempted}</strong></p>
+  <p>Correct: <strong>${correct}</strong></p>
+  <p>Wrong: <strong>${wrong}</strong></p>
+  <p>Skipped: <strong>${skipped}</strong></p>
+  <p>Score: <strong>${score}</strong></p>
+</div><div class="col-md-6">
+  <h5>Summary</h5>
+  <div class="progress" style="height:16px"><div class="progress-bar" role="progressbar" style="width:${Math.round((correct / totalQuestions) * 100)}%">${Math.round((correct / totalQuestions) * 100)}%</div></div>
+</div></div>
+<hr>
+<h5>Question Review</h5>`;
+
+      for (let i = 1; i <= totalQuestions; i++) {
+        const q = questions[i];
+        const a = answers[i];
+        const origCorrectId = parseInt(q.correct, 10) - 1;
+        const userAnsText = (a && (a.selectedMetaId === 0 || a.selectedMetaId)) ? q._shuffled.meta.find(m => m.id === a.selectedMetaId).text : 'Not Attempted';
+        const correctAnsText = q._shuffled.meta.find(m => m.id === origCorrectId).text;
+        const bg = (a && (a.selectedMetaId === 0 || a.selectedMetaId)) ? (a.selectedMetaId === origCorrectId ? 'bg-success text-white' : 'bg-danger text-white') : 'bg-secondary text-white';
+
+        scHtml += `<div class="card mb-2 ${bg}"><div class="card-body">
+    <p><strong>Q${i}.</strong> ${escapeHtml(q.text)}</p>
+    <p><strong>Your Answer:</strong> ${escapeHtml(userAnsText)}</p>
+    <p><strong>Correct Answer ✅:</strong> ${escapeHtml(correctAnsText)}</p>
+  ${explanations[i] ? `<button class="btn btn-sm btn-light mt-2" onclick="showExplanation(${i})">View Explanation</button>` : ''}
+<div class="mt-2">
+  <a href="https://www.google.com/search?q=${encodeURIComponent(questions[i].text)}"
+     target="_blank"
+     class="btn btn-sm btn-primary">
+     🔍 Search it on Google
+  </a>
+</div>
+
+      </div></div>`;
+      }
+
+      document.getElementById('scoreContent').innerHTML = scHtml;
+      new bootstrap.Modal(document.getElementById('scoreModal')).show();
+
+      // Update all nav buttons with their final status colors
+      for (let i = 1; i <= totalQuestions; i++) {
+        updateNav(i);
+      }
+
+      // Re-render the current question to show its correct/wrong state
+      renderQuestion(currentQuestion);
     }
 
 
@@ -1067,5 +1380,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
+
 
 </html>
